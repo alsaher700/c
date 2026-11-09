@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>طقس غزة</title>
+<style>
+/*FONTS*/
+
+:root {
+  --ink: #FFFFFF;
+  --ink-2: rgba(255, 255, 255, .78);
+  --ink-3: rgba(255, 255, 255, .55);
+  --gold: #F7C873;
+  --gold-deep: #F2A541;
+  --line: rgba(255, 255, 255, .14);
+  --glass: rgba(255, 255, 255, .065);
+  --navy: #061A31;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1350px; }
+body { font-family: 'Cairo', sans-serif; color: var(--ink); background: var(--navy); overflow: hidden; }
+
+.poster {
+  position: relative;
+  width: 1080px; height: 1350px;
+  overflow: hidden;
+  padding: 56px 60px 44px;
+  display: flex; flex-direction: column;
+  background:
+    radial-gradient(760px 620px at 22% 30%, rgba(255, 176, 72, .30), transparent 62%),
+    radial-gradient(900px 520px at 90% 0%, rgba(80, 170, 220, .22), transparent 70%),
+    linear-gradient(180deg, #0C2D50 0%, #0F416B 42%, #0B3255 72%, #061A31 100%);
+}
+
+/* subtle eight-point star lattice */
+.pattern {
+  position: absolute; inset: 0; pointer-events: none; opacity: .055;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23fff' stroke-width='1.4'%3E%3Cpath d='M60 18 L72 48 L102 60 L72 72 L60 102 L48 72 L18 60 L48 48 Z'/%3E%3Cpath d='M30 30 L90 30 L90 90 L30 90 Z' transform='rotate(45 60 60)'/%3E%3Crect x='30' y='30' width='60' height='60'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 120px 120px;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,.4) 55%, #000 100%);
+}
+
+.waves { position: absolute; left: 0; right: 0; bottom: 0; height: 420px; pointer-events: none; }
+
+.layer { position: relative; z-index: 1; }
+
+/* ---------- header ---------- */
+.top { display: flex; justify-content: space-between; align-items: flex-start; }
+.brand .kicker {
+  font-family: 'Cairo'; font-weight: 700; font-size: 17px; letter-spacing: .32em;
+  color: var(--gold); direction: ltr; text-align: right; margin-bottom: 2px;
+}
+.brand h1 {
+  font-family: 'Reem Kufi', 'Cairo'; font-weight: 700; font-size: 84px; line-height: 1.05;
+  letter-spacing: 0;
+}
+.brand h1 span { color: var(--gold); }
+.brand .sub { font-size: 21px; color: var(--ink-3); font-weight: 600; margin-top: 4px; }
+
+.date {
+  display: flex; align-items: stretch; gap: 18px;
+  padding: 16px 22px 16px 26px; border-radius: 22px;
+  background: var(--glass); border: 1px solid var(--line);
+  backdrop-filter: blur(6px);
+}
+.date .bar { width: 4px; border-radius: 4px; background: linear-gradient(180deg, var(--gold), var(--gold-deep)); }
+.date .day { font-size: 34px; font-weight: 800; color: var(--gold); line-height: 1.2; }
+.date .greg { font-size: 26px; font-weight: 700; line-height: 1.35; }
+.date .hijri { font-size: 20px; font-weight: 600; color: var(--ink-2); line-height: 1.4; }
+
+/* ---------- hero ---------- */
+.hero { display: flex; justify-content: space-between; align-items: center; height: 316px; margin-top: 4px; }
+.hero .now { display: flex; flex-direction: column; }
+.chip {
+  align-self: flex-start;
+  font-size: 20px; font-weight: 700; color: var(--navy);
+  background: linear-gradient(90deg, var(--gold), var(--gold-deep));
+  padding: 4px 18px; border-radius: 999px;
+}
+.temp {
+  font-family: 'Reem Kufi', 'Cairo'; font-weight: 700; font-size: 220px; line-height: .95; letter-spacing: 0;
+  background: linear-gradient(180deg, #FFFFFF 30%, #FFE3AE 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  display: flex; align-items: flex-start;
+}
+.temp sup { font-size: 104px; line-height: 1.2; margin-inline-start: -6px; -webkit-text-fill-color: var(--gold); }
+.cond { font-size: 44px; font-weight: 800; margin-top: 4px; line-height: 1.2; }
+.range { font-size: 25px; font-weight: 600; color: var(--ink-2); margin-top: 6px; }
+.range b { color: var(--ink); font-weight: 800; }
+.range i { font-style: normal; color: var(--ink-3); margin: 0 12px; }
+
+.sunart { position: relative; width: 350px; height: 316px; margin-inline-end: 14px; }
+.sunart svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+/* ---------- stats ---------- */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 12px; }
+.stat {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 18px; border-radius: 20px;
+  background: var(--glass); border: 1px solid var(--line);
+}
+.stat svg { width: 40px; height: 40px; flex: none; }
+.stat .k { font-size: 17px; color: var(--ink-3); font-weight: 600; line-height: 1.3; }
+.stat .v { font-size: 27px; font-weight: 800; line-height: 1.2; }
+
+/* ---------- week ---------- */
+.sec { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; gap: 18px; }
+.sec h2 { font-family: 'Reem Kufi', 'Cairo'; font-size: 34px; font-weight: 700; white-space: nowrap; }
+.sec .rule { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--line) 30%, var(--line)); }
+.sec .span { font-size: 20px; color: var(--ink-3); font-weight: 600; white-space: nowrap; }
+
+.week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; margin-top: 12px; }
+.dayc {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 14px 6px 12px; border-radius: 22px;
+  background: var(--glass); border: 1px solid var(--line);
+}
+.dayc.today {
+  background: linear-gradient(180deg, rgba(247, 200, 115, .22), rgba(247, 200, 115, .06));
+  border-color: rgba(247, 200, 115, .65);
+}
+.dayc .dn { font-size: 22px; font-weight: 800; line-height: 1.3; }
+.dayc.today .dn { color: var(--gold); }
+.dayc .dd { font-size: 15px; color: var(--ink-3); font-weight: 600; line-height: 1.3; }
+.dayc .ic { width: 60px; height: 60px; margin: 6px 0 4px; }
+.dayc .hi { font-size: 32px; font-weight: 800; line-height: 1.15; }
+.dayc .lo { font-size: 20px; font-weight: 600; color: var(--ink-3); line-height: 1.3; }
+.dayc .rb { position: relative; width: 70%; height: 6px; border-radius: 6px; background: rgba(255,255,255,.12); margin: 8px 0 6px; }
+.dayc .rb span {
+  position: absolute; top: 0; bottom: 0; border-radius: 6px;
+  background: linear-gradient(270deg, #FFB347, #7FD3F7);
+}
+
+/* ---------- hadith ---------- */
+.hadith {
+  position: relative; margin-top: 34px;
+  padding: 30px 40px 20px; border-radius: 28px; text-align: center;
+  background: linear-gradient(180deg, rgba(6, 26, 49, .55), rgba(6, 26, 49, .78));
+  border: 1px solid rgba(247, 200, 115, .45);
+  box-shadow: inset 0 0 0 6px rgba(247, 200, 115, .06);
+}
+.hadith .tag {
+  position: absolute; top: -19px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 10px;
+  font-size: 19px; font-weight: 800; color: var(--navy);
+  background: linear-gradient(90deg, var(--gold), var(--gold-deep));
+  padding: 4px 22px; border-radius: 999px; white-space: nowrap;
+}
+.hadith .corner { position: absolute; width: 34px; height: 34px; opacity: .8; }
+.hadith .corner.tr { top: 12px; right: 12px; }
+.hadith .corner.tl { top: 12px; left: 12px; transform: scaleX(-1); }
+.hadith .corner.br { bottom: 12px; right: 12px; transform: scaleY(-1); }
+.hadith .corner.bl { bottom: 12px; left: 12px; transform: scale(-1, -1); }
+.hadith .lead { font-family: 'Amiri', serif; font-size: 29px; line-height: 1.55; color: var(--ink-2); }
+.hadith .quote { font-family: 'Amiri', serif; font-weight: 700; font-size: 60px; line-height: 1.38; color: var(--gold); margin-top: 18px; }
+.hadith .ref { font-size: 18px; font-weight: 700; color: var(--ink-3); margin-top: 2px; }
+.hadith .ref b { color: var(--ink-2); }
+
+/* ---------- footer ---------- */
+.foot { margin-top: auto; padding-top: 14px; display: flex; justify-content: space-between; align-items: center; }
+.qr { display: flex; align-items: center; gap: 16px; }
+.qr .code { width: 92px; height: 92px; padding: 7px; background: #fff; border-radius: 14px; }
+.qr .code svg { width: 100%; height: 100%; display: block; }
+.qr .t1 { font-size: 21px; font-weight: 800; line-height: 1.35; }
+.qr .t2 { font-size: 17px; color: var(--ink-3); font-weight: 600; line-height: 1.4; }
+.qr .g { font-family: 'Cairo'; font-weight: 800; letter-spacing: .01em; }
+.src { text-align: left; font-size: 16px; color: var(--ink-3); font-weight: 600; line-height: 1.55; }
+.src b { color: var(--ink-2); }
+</style>
+</head>
+<body>
+<div class="poster" id="poster">
+  <div class="pattern"></div>
+  <svg class="waves" viewBox="0 0 1080 420" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 150 C 180 110 320 190 540 150 S 900 110 1080 150 V420 H0Z" fill="rgba(127, 211, 247, .05)"/>
+    <path d="M0 210 C 200 170 360 250 560 205 S 920 170 1080 215 V420 H0Z" fill="rgba(127, 211, 247, .06)"/>
+    <path d="M0 290 C 220 255 380 325 600 285 S 940 255 1080 295 V420 H0Z" fill="rgba(6, 26, 49, .55)"/>
+  </svg>
+
+  <div class="layer top">
+    <div class="brand">
+      <div class="kicker">GAZA · PALESTINE</div>
+      <h1>طقس <span>غزة</span></h1>
+    </div>
+    <div class="date">
+      <div class="bar"></div>
+      <div>
+        <div class="day" id="dayName"></div>
+        <div class="greg" id="greg"></div>
+        <div class="hijri" id="hijri"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="layer hero">
+    <div class="now">
+      <div class="temp"><span id="temp"></span><sup>°</sup></div>
+      <div class="cond" id="cond"></div>
+      <div class="range" id="range"></div>
+    </div>
+    <div class="sunart" id="sunart"></div>
+  </div>
+
+  <div class="layer stats" id="stats"></div>
+
+  <div class="layer sec">
+    <h2>توقعات الأسبوع</h2>
+    <div class="rule"></div>
+    <div class="span" id="span"></div>
+  </div>
+  <div class="layer week" id="week"></div>
+
+  <div class="layer hadith">
+    <div class="tag" id="htag"></div>
+    <svg class="corner tr" viewBox="0 0 34 34" fill="none" stroke="#F7C873" stroke-width="1.6"><path d="M33 1H9a8 8 0 0 0-8 8v24"/><path d="M33 7H13a6 6 0 0 0-6 6v20" opacity=".5"/><circle cx="7" cy="7" r="2.2" fill="#F7C873" stroke="none"/></svg>
+    <svg class="corner tl" viewBox="0 0 34 34" fill="none" stroke="#F7C873" stroke-width="1.6"><path d="M33 1H9a8 8 0 0 0-8 8v24"/><path d="M33 7H13a6 6 0 0 0-6 6v20" opacity=".5"/><circle cx="7" cy="7" r="2.2" fill="#F7C873" stroke="none"/></svg>
+    <svg class="corner br" viewBox="0 0 34 34" fill="none" stroke="#F7C873" stroke-width="1.6"><path d="M33 1H9a8 8 0 0 0-8 8v24"/><path d="M33 7H13a6 6 0 0 0-6 6v20" opacity=".5"/><circle cx="7" cy="7" r="2.2" fill="#F7C873" stroke="none"/></svg>
+    <svg class="corner bl" viewBox="0 0 34 34" fill="none" stroke="#F7C873" stroke-width="1.6"><path d="M33 1H9a8 8 0 0 0-8 8v24"/><path d="M33 7H13a6 6 0 0 0-6 6v20" opacity=".5"/><circle cx="7" cy="7" r="2.2" fill="#F7C873" stroke="none"/></svg>
+    <div class="lead" id="hlead"></div>
+    <div class="quote" id="hquote"></div>
+    <div class="ref" id="href"></div>
+  </div>
+
+  <div class="layer foot">
+    <div class="qr">
+      <div class="code" id="qr"></div>
+      <div>
+        <div class="t1">امسح الرمز لمتابعة طقس غزة</div>
+        <div class="t2">مباشرةً على <span class="g">Google</span></div>
+      </div>
+    </div>
+    <div class="src" id="src"></div>
+  </div>
+</div>
+
+<script>
+/*VIEW*/
+
+const V = window.VIEW;
+const $ = (id) => document.getElementById(id);
+
+/* ---------- icons (64×64 grid) ---------- */
+const DEFS = `
+  <defs>
+    <radialGradient id="sunG" cx="45%" cy="40%" r="60%">
+      <stop offset="0" stop-color="#FFF1C1"/><stop offset=".55" stop-color="#FFC94D"/><stop offset="1" stop-color="#F59A2A"/>
+    </radialGradient>
+    <linearGradient id="cloudG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#C9DDF0"/>
+    </linearGradient>
+    <linearGradient id="cloudD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C7D3E0"/><stop offset="1" stop-color="#8A9BB0"/>
+    </linearGradient>
+  </defs>`;
+
+function rays(cx, cy, r1, r2, n, w, color) {
+  let s = '';
+  for (let i = 0; i < n; i++) {
+    const a = (Math.PI * 2 * i) / n;
+    s += `<line x1="${cx + r1 * Math.cos(a)}" y1="${cy + r1 * Math.sin(a)}" x2="${cx + r2 * Math.cos(a)}" y2="${cy + r2 * Math.sin(a)}" stroke="${color}" stroke-width="${w}" stroke-linecap="round"/>`;
+  }
+  return s;
+}
+const CLOUD = (dx = 0, dy = 0, s = 1, fill = 'url(#cloudG)') =>
+  `<path transform="translate(${dx} ${dy}) scale(${s})" fill="${fill}" d="M18 50h28a10 10 0 0 0 1.6-19.9A14 14 0 0 0 20.6 27 11.5 11.5 0 0 0 18 50z"/>`;
+
+const ICONS = {
+  sunny: () => `${rays(32, 32, 19, 27, 8, 3.4, '#FFC857')}<circle cx="32" cy="32" r="13.5" fill="url(#sunG)"/>`,
+  clear: () => ICONS.sunny(),
+  partly: () => `${rays(24, 24, 14, 20, 8, 2.8, '#FFC857')}<circle cx="24" cy="24" r="10" fill="url(#sunG)"/>${CLOUD(4, 6, .92)}`,
+  cloudy: () => `${CLOUD(-6, -6, .8, 'url(#cloudD)')}${CLOUD(2, 4, .95)}`,
+  fog: () => `${CLOUD(0, -6, .95)}<g stroke="#C9DDF0" stroke-width="3" stroke-linecap="round"><line x1="14" y1="52" x2="50" y2="52"/><line x1="20" y1="58" x2="44" y2="58"/></g>`,
+  drizzle: () => `${CLOUD(0, -8, .95)}<g stroke="#7FD3F7" stroke-width="3" stroke-linecap="round"><line x1="24" y1="50" x2="22" y2="55"/><line x1="34" y1="50" x2="32" y2="55"/><line x1="44" y1="50" x2="42" y2="55"/></g>`,
+  rain: () => `${CLOUD(0, -8, .95, 'url(#cloudD)')}<g stroke="#7FD3F7" stroke-width="3.2" stroke-linecap="round"><line x1="22" y1="48" x2="18" y2="58"/><line x1="32" y1="48" x2="28" y2="58"/><line x1="42" y1="48" x2="38" y2="58"/></g>`,
+  snow: () => `${CLOUD(0, -8, .95)}<g fill="#FFFFFF"><circle cx="22" cy="52" r="2.6"/><circle cx="32" cy="57" r="2.6"/><circle cx="42" cy="52" r="2.6"/></g>`,
+  storm: () => `${CLOUD(0, -8, .95, 'url(#cloudD)')}<path d="M34 44 L26 56 h7 l-4 9 L40 51 h-7 l4-7z" fill="#FFC857"/>`,
+};
+const icon = (key, cls = '') => `<svg class="${cls}" viewBox="0 0 64 64">${DEFS}${(ICONS[key] || ICONS.sunny)()}</svg>`;
+
+/* big hero sun with glow + tapered rays */
+function heroArt(key) {
+  if (key !== 'sunny' && key !== 'clear') {
+    return `<svg viewBox="0 0 400 380"><circle cx="200" cy="190" r="170" fill="url(#halo)"/>
+      <defs><radialGradient id="halo"><stop offset="0" stop-color="#FFC94D" stop-opacity=".25"/><stop offset="1" stop-color="#FFC94D" stop-opacity="0"/></radialGradient></defs>
+      <g transform="translate(40 30) scale(5)">${DEFS}${ICONS[key]()}</g></svg>`;
+  }
+  let tapered = '';
+  for (let i = 0; i < 16; i++) {
+    const len = i % 2 ? 150 : 178;
+    tapered += `<path d="M200 ${190 - 104} L${200 - 7} ${190 - 112} L200 ${190 - len} L${200 + 7} ${190 - 112}Z" transform="rotate(${i * 22.5} 200 190)" fill="url(#rayG)"/>`;
+  }
+  return `<svg viewBox="0 0 400 380">
+    <defs>
+      <radialGradient id="glow"><stop offset="0" stop-color="#FFD27A" stop-opacity=".55"/><stop offset=".45" stop-color="#FFB347" stop-opacity=".18"/><stop offset="1" stop-color="#FFB347" stop-opacity="0"/></radialGradient>
+      <radialGradient id="core" cx="42%" cy="38%" r="65%"><stop offset="0" stop-color="#FFF6D8"/><stop offset=".45" stop-color="#FFD15C"/><stop offset="1" stop-color="#F28C28"/></radialGradient>
+      <linearGradient id="rayG" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FFD15C"/><stop offset="1" stop-color="#FFD15C" stop-opacity="0"/></linearGradient>
+    </defs>
+    <circle cx="200" cy="190" r="200" fill="url(#glow)"/>
+    ${tapered}
+    <circle cx="200" cy="190" r="118" fill="none" stroke="rgba(255,214,120,.35)" stroke-width="1.5" stroke-dasharray="2 9"/>
+    <circle cx="200" cy="190" r="92" fill="url(#core)"/>
+    <circle cx="200" cy="190" r="92" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+    <path d="M150 160 A60 60 0 0 1 196 128" stroke="rgba(255,255,255,.75)" stroke-width="6" stroke-linecap="round" fill="none"/>
+  </svg>`;
+}
+
+/* line icons for the stat tiles */
+const G = '#F7C873';
+const STAT_ICONS = {
+  humidity: `<svg viewBox="0 0 40 40" fill="none" stroke="${G}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5 C 26 13 31 19 31 25 a11 11 0 0 1-22 0 C 9 19 14 13 20 5z"/><path d="M15 26a5 5 0 0 0 5 5"/></svg>`,
+  rain: `<svg viewBox="0 0 40 40" fill="none" stroke="${G}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20a15 15 0 0 1 30 0z"/><path d="M20 20v11a4 4 0 0 1-8 0"/><path d="M20 3v2"/></svg>`,
+  sunrise: `<svg viewBox="0 0 40 40" fill="none" stroke="${G}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 28a10 10 0 0 1 20 0"/><path d="M4 33h32"/><path d="M20 4v9"/><path d="M16 9l4-5 4 5"/><path d="M7 19l2 2M33 19l-2 2"/></svg>`,
+  sunset: `<svg viewBox="0 0 40 40" fill="none" stroke="${G}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 28a10 10 0 0 1 20 0"/><path d="M4 33h32"/><path d="M20 4v9"/><path d="M16 8.5l4 4.5 4-4.5"/><path d="M7 19l2 2M33 19l-2 2"/></svg>`,
+};
+
+/* ---------- fill ---------- */
+$('dayName').textContent = V.dayName;
+$('greg').textContent = V.gregorian;
+$('hijri').textContent = V.hijri;
+
+$('temp').textContent = V.hero.high;
+$('cond').textContent = V.hero.label;
+$('range').innerHTML = `العظمى <b>${V.hero.high}°</b><i>|</i>الصغرى <b>${V.hero.low}°</b>`;
+$('sunart').innerHTML = heroArt(V.hero.key);
+
+$('stats').innerHTML = V.stats.map(s => `
+  <div class="stat">${STAT_ICONS[s.icon]}<div><div class="k">${s.k}</div><div class="v">${s.v}</div></div></div>`).join('');
+
+$('span').textContent = V.span;
+const span = Math.max(1, V.weekMax - V.weekMin);
+$('week').innerHTML = V.week.map((d, i) => {
+  const r = 100 * (d.lowN - V.weekMin) / span;          /* RTL: right edge = low */
+  const w = 100 * (d.highN - d.lowN) / span;
+  return `<div class="dayc ${i === 0 ? 'today' : ''}">
+    <div class="dn">${d.name}</div>
+    <div class="dd">${d.date}</div>
+    ${icon(d.key, 'ic')}
+    <div class="hi">${d.high}°</div>
+    <div class="rb"><span style="right:${r}%;width:${Math.max(w, 8)}%"></span></div>
+    <div class="lo">${d.low}°</div>
+  </div>`;
+}).join('');
+
+$('htag').textContent = V.hadith.tag;
+$('hlead').textContent = V.hadith.lead;
+$('hquote').textContent = V.hadith.quote;
+$('href').innerHTML = V.hadith.ref;
+
+$('qr').innerHTML = V.qr;
+$('src').innerHTML = V.src;
+
+document.fonts.ready.then(() => { document.body.dataset.ready = '1'; });
+</script>
+</body>
+</html>
