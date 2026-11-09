@@ -79,8 +79,8 @@ async function fetchLive() {
 }
 
 /* ---------- formatting ---------- */
-const AR = 'ar-u-nu-arab';
-const num = (n) => Number(n).toLocaleString(AR);
+const AR = 'ar-u-nu-latn';
+const num = (n) => String(Math.round(Number(n)));
 const noon = (iso) => {
   const [y, m, d] = iso.split('-').map(Number);
   return new Date(Date.UTC(y, m - 1, d, 10)); // 12:00 بتوقيت غزة
@@ -88,7 +88,7 @@ const noon = (iso) => {
 const fmt = (date, opts) => new Intl.DateTimeFormat(AR, { timeZone: GAZA.tz, ...opts }).format(date);
 const fmtTime = (date) => fmt(date, { hour: 'numeric', minute: '2-digit' });
 const hijri = (date) =>
-  new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura-nu-arab', {
+  new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura-nu-latn', {
     timeZone: GAZA.tz, day: 'numeric', month: 'long', year: 'numeric',
   }).format(date);
 
@@ -106,25 +106,26 @@ function buildView(data, qrSvg) {
   const sameMonth = first.getUTCMonth() === last.getUTCMonth();
 
   return {
-    place: 'قطاع غزة · فلسطين',
+    place: 'قطاع غزة، فلسطين',
     dayName: fmt(d0, { weekday: 'long' }),
     gregorian: fmt(d0, { day: 'numeric', month: 'long', year: 'numeric' }),
     hijri: hijri(d0),
+    calMonth: fmt(d0, { month: 'long' }),
+    calDay: num(d0.getUTCDate()),
     hero: {
-      chip: `طقس اليوم · ${CONDITIONS[today.condition]}`,
       key: today.condition,
       label: today.condition === 'clear' ? 'صحوٌ ومشمس' : CONDITIONS[today.condition],
       high: num(today.high),
       low: num(today.low),
     },
     stats: [
-      { icon: 'humidity', k: 'الرطوبة', v: data.today?.humidity != null ? `${num(data.today.humidity)}٪` : '—' },
-      { icon: 'rain', k: 'فرصة المطر', v: `${num(precip)}٪` },
+      { icon: 'humidity', k: 'الرطوبة', v: data.today?.humidity != null ? `${num(data.today.humidity)}%` : '—' },
+      { icon: 'rain', k: 'فرصة المطر', v: `${num(precip)}%` },
       { icon: 'sunrise', k: 'الشروق', v: fmtTime(sun.sunrise) },
       { icon: 'sunset', k: 'الغروب', v: fmtTime(sun.sunset) },
     ],
     span: sameMonth
-      ? `${num(first.getUTCDate())} – ${fmt(last, { day: 'numeric', month: 'long' })}`
+      ? `${num(first.getUTCDate())}–${fmt(last, { day: 'numeric', month: 'long' })}`
       : `${fmt(first, { day: 'numeric', month: 'long' })} – ${fmt(last, { day: 'numeric', month: 'long' })}`,
     weekMin: Math.min(...lows),
     weekMax: Math.max(...highs),
@@ -146,9 +147,9 @@ function buildView(data, qrSvg) {
 /* ---------- fonts: inline the Arabic + Latin subsets as data URIs ---------- */
 function fontCss() {
   const sets = [
-    ['cairo', [400, 600, 700, 800]],
+    ['alexandria', [600, 800, 900]],
+    ['ibm-plex-sans-arabic', [500, 600, 700]],
     ['amiri', [400, 700]],
-    ['reem-kufi', [600, 700]],
   ];
   let css = '';
   for (const [pkg, weights] of sets) {

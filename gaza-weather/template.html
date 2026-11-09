@@ -7,231 +7,232 @@
 /*FONTS*/
 
 :root {
-  --ink: #FFFFFF;
-  --ink-2: rgba(255, 255, 255, .78);
-  --ink-3: rgba(255, 255, 255, .55);
-  --gold: #F7C873;
-  --gold-deep: #F2A541;
-  --line: rgba(255, 255, 255, .14);
-  --glass: rgba(255, 255, 255, .065);
-  --navy: #061A31;
+  --page: #F3EDE2;          /* sand cream */
+  --card: #FFFFFF;
+  --ink: #0B2E4A;           /* deep sea navy */
+  --ink-2: #4E6274;
+  --ink-3: #7D8B97;
+  --sky: #0B62BF;
+  --hi: #E0702A;            /* sunset orange — validated pair */
+  --lo: #0E93B3;            /* sea teal */
+  --olive-1: #5F7F31;
+  --olive-2: #3E5A22;
+  --wheat: #FFE39A;
+  --cream: #F7F1E2;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { width: 1080px; height: 1350px; }
-body { font-family: 'Cairo', sans-serif; color: var(--ink); background: var(--navy); overflow: hidden; }
+body {
+  font-family: 'IBM Plex Sans Arabic', sans-serif; color: var(--ink);
+  background: var(--page); overflow: hidden;
+}
+.n { direction: ltr; unicode-bidi: isolate; display: inline-block; }
 
 .poster {
-  position: relative;
-  width: 1080px; height: 1350px;
-  overflow: hidden;
-  padding: 56px 60px 44px;
-  display: flex; flex-direction: column;
-  background:
-    radial-gradient(760px 620px at 22% 30%, rgba(255, 176, 72, .30), transparent 62%),
-    radial-gradient(900px 520px at 90% 0%, rgba(80, 170, 220, .22), transparent 70%),
-    linear-gradient(180deg, #0C2D50 0%, #0F416B 42%, #0B3255 72%, #061A31 100%);
+  position: relative; width: 1080px; height: 1350px; overflow: hidden;
+  padding: 32px; display: flex; flex-direction: column;
+  background: var(--page);
 }
 
-/* subtle eight-point star lattice */
-.pattern {
-  position: absolute; inset: 0; pointer-events: none; opacity: .055;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23fff' stroke-width='1.4'%3E%3Cpath d='M60 18 L72 48 L102 60 L72 72 L60 102 L48 72 L18 60 L48 48 Z'/%3E%3Cpath d='M30 30 L90 30 L90 90 L30 90 Z' transform='rotate(45 60 60)'/%3E%3Crect x='30' y='30' width='60' height='60'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: 120px 120px;
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,.4) 55%, #000 100%);
+/* ================= scene ================= */
+.scene {
+  position: relative; height: 624px; border-radius: 44px; overflow: hidden; flex: none;
+  box-shadow: 0 24px 48px -20px rgba(11, 46, 74, .35);
 }
+.scene svg.bg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 
-.waves { position: absolute; left: 0; right: 0; bottom: 0; height: 420px; pointer-events: none; }
-
-.layer { position: relative; z-index: 1; }
-
-/* ---------- header ---------- */
-.top { display: flex; justify-content: space-between; align-items: flex-start; }
-.brand .kicker {
-  font-family: 'Cairo'; font-weight: 700; font-size: 17px; letter-spacing: .32em;
-  color: var(--gold); direction: ltr; text-align: right; margin-bottom: 2px;
+.title { position: absolute; top: 28px; right: 40px; color: #fff; text-align: right; }
+.title h1 {
+  font-family: 'Alexandria'; font-weight: 900; font-size: 56px; line-height: 1.15;
+  text-shadow: 0 4px 18px rgba(0, 40, 90, .25);
 }
-.brand h1 {
-  font-family: 'Reem Kufi', 'Cairo'; font-weight: 700; font-size: 84px; line-height: 1.05;
-  letter-spacing: 0;
+.title .loc {
+  display: inline-flex; align-items: center; gap: 6px; margin-bottom: 2px;
+  font-size: 16px; font-weight: 600;
+  padding: 3px 14px 3px 12px; border-radius: 999px;
+  background: rgba(255, 255, 255, .18); border: 1px solid rgba(255, 255, 255, .38);
+  backdrop-filter: blur(8px);
 }
-.brand h1 span { color: var(--gold); }
-.brand .sub { font-size: 21px; color: var(--ink-3); font-weight: 600; margin-top: 4px; }
+.title .loc svg { width: 16px; height: 16px; }
 
 .date {
-  display: flex; align-items: stretch; gap: 18px;
-  padding: 16px 22px 16px 26px; border-radius: 22px;
-  background: var(--glass); border: 1px solid var(--line);
-  backdrop-filter: blur(6px);
+  position: absolute; top: 34px; left: 34px;
+  padding: 16px 24px 16px 22px; border-radius: 26px;
+  background: rgba(255, 255, 255, .93);
+  box-shadow: 0 10px 30px -10px rgba(0, 40, 90, .35);
+  display: flex; gap: 16px; align-items: center;
 }
-.date .bar { width: 4px; border-radius: 4px; background: linear-gradient(180deg, var(--gold), var(--gold-deep)); }
-.date .day { font-size: 34px; font-weight: 800; color: var(--gold); line-height: 1.2; }
-.date .greg { font-size: 26px; font-weight: 700; line-height: 1.35; }
-.date .hijri { font-size: 20px; font-weight: 600; color: var(--ink-2); line-height: 1.4; }
+.date .cal {
+  width: 58px; height: 62px; border-radius: 16px; overflow: hidden; flex: none;
+  background: #fff; border: 1.5px solid #E3E9EF; text-align: center;
+}
+.date .cal .m { background: var(--hi); color: #fff; font-size: 13px; font-weight: 700; line-height: 20px; }
+.date .cal .d { font-family: 'Alexandria'; font-weight: 800; font-size: 28px; line-height: 40px; color: var(--ink); }
+.date .day { font-family: 'Alexandria'; font-size: 26px; font-weight: 800; color: var(--sky); line-height: 1.25; }
+.date .greg { font-size: 19px; font-weight: 700; line-height: 1.4; }
+.date .hijri { font-size: 15px; font-weight: 600; color: var(--ink-3); line-height: 1.4; }
 
-/* ---------- hero ---------- */
-.hero { display: flex; justify-content: space-between; align-items: center; height: 316px; margin-top: 4px; }
-.hero .now { display: flex; flex-direction: column; }
-.chip {
-  align-self: flex-start;
-  font-size: 20px; font-weight: 700; color: var(--navy);
-  background: linear-gradient(90deg, var(--gold), var(--gold-deep));
-  padding: 4px 18px; border-radius: 999px;
-}
+.hero { position: absolute; top: 140px; right: 40px; color: #fff; text-align: right; }
 .temp {
-  font-family: 'Reem Kufi', 'Cairo'; font-weight: 700; font-size: 220px; line-height: .95; letter-spacing: 0;
-  background: linear-gradient(180deg, #FFFFFF 30%, #FFE3AE 100%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  display: flex; align-items: flex-start;
+  font-family: 'Alexandria'; font-weight: 800; font-size: 196px; line-height: .92; letter-spacing: -5px;
+  direction: ltr; display: flex; justify-content: flex-end; align-items: flex-start;
+  text-shadow: 0 14px 40px rgba(0, 40, 90, .28);
 }
-.temp sup { font-size: 104px; line-height: 1.2; margin-inline-start: -6px; -webkit-text-fill-color: var(--gold); }
-.cond { font-size: 44px; font-weight: 800; margin-top: 4px; line-height: 1.2; }
-.range { font-size: 25px; font-weight: 600; color: var(--ink-2); margin-top: 6px; }
-.range b { color: var(--ink); font-weight: 800; }
-.range i { font-style: normal; color: var(--ink-3); margin: 0 12px; }
+.temp sup { font-size: 104px; line-height: 1; margin-left: 4px; color: #FFE08A; letter-spacing: 0; }
+.cond {
+  font-family: 'Alexandria'; font-size: 44px; font-weight: 800; line-height: 1.2; margin-top: 2px;
+  text-shadow: 0 2px 4px rgba(0, 40, 90, .25), 0 6px 24px rgba(0, 40, 90, .45);
+}
+.chips { display: flex; gap: 10px; justify-content: flex-start; margin-top: 14px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255, 255, 255, .95); color: var(--ink);
+  padding: 6px 16px 6px 14px; border-radius: 999px;
+  font-size: 18px; font-weight: 600;
+  box-shadow: 0 8px 20px -10px rgba(0, 40, 90, .45);
+}
+.chip b { font-family: 'Alexandria'; font-weight: 800; font-size: 21px; }
+.chip svg { width: 14px; height: 14px; }
 
-.sunart { position: relative; width: 350px; height: 316px; margin-inline-end: 14px; }
-.sunart svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-
-/* ---------- stats ---------- */
-.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 12px; }
+.stats {
+  position: absolute; left: 18px; right: 18px; bottom: 18px;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+}
 .stat {
-  display: flex; align-items: center; gap: 14px;
-  padding: 14px 18px; border-radius: 20px;
-  background: var(--glass); border: 1px solid var(--line);
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; border-radius: 24px;
+  background: rgba(255, 255, 255, .95);
+  box-shadow: 0 10px 24px -14px rgba(80, 50, 10, .45);
 }
-.stat svg { width: 40px; height: 40px; flex: none; }
-.stat .k { font-size: 17px; color: var(--ink-3); font-weight: 600; line-height: 1.3; }
-.stat .v { font-size: 27px; font-weight: 800; line-height: 1.2; }
+.stat .badge { width: 48px; height: 48px; border-radius: 16px; display: grid; place-items: center; flex: none; }
+.stat .badge svg { width: 28px; height: 28px; }
+.stat .k { font-size: 15px; color: var(--ink-3); font-weight: 600; line-height: 1.3; }
+.stat .v { font-family: 'Alexandria'; font-size: 23px; font-weight: 800; line-height: 1.25; }
 
-/* ---------- week ---------- */
-.sec { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; gap: 18px; }
-.sec h2 { font-family: 'Reem Kufi', 'Cairo'; font-size: 34px; font-weight: 700; white-space: nowrap; }
-.sec .rule { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--line) 30%, var(--line)); }
-.sec .span { font-size: 20px; color: var(--ink-3); font-weight: 600; white-space: nowrap; }
+/* ================= week ================= */
+.week {
+  margin-top: 20px; height: 300px; flex: none;
+  background: var(--card); border-radius: 36px; padding: 22px 24px 16px;
+  box-shadow: 0 18px 40px -26px rgba(80, 50, 10, .35);
+  display: flex; flex-direction: column;
+}
+.week .head { display: flex; justify-content: space-between; align-items: center; height: 34px; }
+.week h2 { font-family: 'Alexandria'; font-size: 25px; font-weight: 800; }
+.week h2 span { font-family: 'IBM Plex Sans Arabic'; font-size: 16px; font-weight: 600; color: var(--ink-3); margin-right: 10px; }
+.legend { display: flex; gap: 18px; font-size: 15px; font-weight: 600; color: var(--ink-2); }
+.legend i { display: inline-block; width: 18px; height: 4px; border-radius: 4px; vertical-align: middle; margin-left: 7px; }
 
-.week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; margin-top: 12px; }
-.dayc {
-  display: flex; flex-direction: column; align-items: center;
-  padding: 14px 6px 12px; border-radius: 22px;
-  background: var(--glass); border: 1px solid var(--line);
-}
-.dayc.today {
-  background: linear-gradient(180deg, rgba(247, 200, 115, .22), rgba(247, 200, 115, .06));
-  border-color: rgba(247, 200, 115, .65);
-}
-.dayc .dn { font-size: 22px; font-weight: 800; line-height: 1.3; }
-.dayc.today .dn { color: var(--gold); }
-.dayc .dd { font-size: 15px; color: var(--ink-3); font-weight: 600; line-height: 1.3; }
-.dayc .ic { width: 60px; height: 60px; margin: 6px 0 4px; }
-.dayc .hi { font-size: 32px; font-weight: 800; line-height: 1.15; }
-.dayc .lo { font-size: 20px; font-weight: 600; color: var(--ink-3); line-height: 1.3; }
-.dayc .rb { position: relative; width: 70%; height: 6px; border-radius: 6px; background: rgba(255,255,255,.12); margin: 8px 0 6px; }
-.dayc .rb span {
-  position: absolute; top: 0; bottom: 0; border-radius: 6px;
-  background: linear-gradient(270deg, #FFB347, #7FD3F7);
-}
+.grid { position: relative; flex: 1; margin-top: 10px; }
+.cols { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(7, 1fr); }
+.col { display: flex; flex-direction: column; align-items: center; padding-top: 8px; border-radius: 22px; margin: 0 3px; }
+.col.today { background: linear-gradient(180deg, #E3F2FB, #F2F9FD); }
+.col .dn { font-size: 19px; font-weight: 700; line-height: 1.3; }
+.col.today .dn { color: var(--sky); }
+.col .dd { font-size: 13px; color: var(--ink-3); font-weight: 600; line-height: 1.3; }
+.col .ic { width: 46px; height: 46px; margin-top: 4px; }
+.chart { position: absolute; left: 0; right: 0; bottom: 0; height: 118px; }
+.chart svg { width: 100%; height: 100%; display: block; overflow: visible; }
 
-/* ---------- hadith ---------- */
+/* ================= hadith ================= */
 .hadith {
-  position: relative; margin-top: 34px;
-  padding: 30px 40px 20px; border-radius: 28px; text-align: center;
-  background: linear-gradient(180deg, rgba(6, 26, 49, .55), rgba(6, 26, 49, .78));
-  border: 1px solid rgba(247, 200, 115, .45);
-  box-shadow: inset 0 0 0 6px rgba(247, 200, 115, .06);
+  position: relative; margin-top: 20px; height: 216px; flex: none; overflow: hidden;
+  border-radius: 36px; text-align: center; color: var(--cream);
+  padding: 20px 56px 14px;
+  background:
+    radial-gradient(500px 220px at 50% 0%, rgba(255, 227, 154, .16), transparent 70%),
+    linear-gradient(135deg, var(--olive-1), var(--olive-2));
+  box-shadow: 0 18px 40px -24px rgba(62, 90, 34, .7);
 }
+.hadith .branch { position: absolute; width: 200px; height: 200px; opacity: .22; }
+.hadith .branch.r { right: -10px; bottom: -30px; }
+.hadith .branch.l { left: -10px; bottom: -30px; transform: scaleX(-1); }
 .hadith .tag {
-  position: absolute; top: -19px; left: 50%; transform: translateX(-50%);
-  display: flex; align-items: center; gap: 10px;
-  font-size: 19px; font-weight: 800; color: var(--navy);
-  background: linear-gradient(90deg, var(--gold), var(--gold-deep));
-  padding: 4px 22px; border-radius: 999px; white-space: nowrap;
+  position: relative;
+  display: inline-block; font-size: 15px; font-weight: 700; color: var(--olive-2);
+  background: var(--cream); padding: 3px 16px; border-radius: 999px;
 }
-.hadith .corner { position: absolute; width: 34px; height: 34px; opacity: .8; }
-.hadith .corner.tr { top: 12px; right: 12px; }
-.hadith .corner.tl { top: 12px; left: 12px; transform: scaleX(-1); }
-.hadith .corner.br { bottom: 12px; right: 12px; transform: scaleY(-1); }
-.hadith .corner.bl { bottom: 12px; left: 12px; transform: scale(-1, -1); }
-.hadith .lead { font-family: 'Amiri', serif; font-size: 29px; line-height: 1.55; color: var(--ink-2); }
-.hadith .quote { font-family: 'Amiri', serif; font-weight: 700; font-size: 60px; line-height: 1.38; color: var(--gold); margin-top: 18px; }
-.hadith .ref { font-size: 18px; font-weight: 700; color: var(--ink-3); margin-top: 2px; }
-.hadith .ref b { color: var(--ink-2); }
+.hadith .lead { position: relative; font-family: 'Amiri', serif; font-size: 26px; line-height: 1.5; margin-top: 6px; opacity: .92; }
+.hadith .quote { position: relative; font-family: 'Amiri', serif; font-weight: 700; font-size: 52px; line-height: 1.35; color: var(--wheat); margin-top: 10px; }
+.hadith .ref { position: relative; font-size: 15px; font-weight: 600; opacity: .75; }
+.hadith .ref b { font-weight: 700; }
 
-/* ---------- footer ---------- */
-.foot { margin-top: auto; padding-top: 14px; display: flex; justify-content: space-between; align-items: center; }
+/* ================= footer ================= */
+.foot { margin-top: auto; display: flex; justify-content: space-between; align-items: center; }
 .qr { display: flex; align-items: center; gap: 16px; }
-.qr .code { width: 92px; height: 92px; padding: 7px; background: #fff; border-radius: 14px; }
+.qr .code {
+  width: 86px; height: 86px; padding: 7px; background: #fff; border-radius: 18px;
+  box-shadow: 0 8px 20px -12px rgba(80, 50, 10, .4);
+}
 .qr .code svg { width: 100%; height: 100%; display: block; }
-.qr .t1 { font-size: 21px; font-weight: 800; line-height: 1.35; }
-.qr .t2 { font-size: 17px; color: var(--ink-3); font-weight: 600; line-height: 1.4; }
-.qr .g { font-family: 'Cairo'; font-weight: 800; letter-spacing: .01em; }
-.src { text-align: left; font-size: 16px; color: var(--ink-3); font-weight: 600; line-height: 1.55; }
+.qr .t1 { font-family: 'Alexandria'; font-size: 20px; font-weight: 800; line-height: 1.35; }
+.qr .t2 { font-size: 16px; color: var(--ink-2); font-weight: 600; line-height: 1.5; }
+.qr .g { font-family: 'Alexandria'; font-weight: 800; direction: ltr; unicode-bidi: isolate; }
+.qr .g span:nth-child(1) { color: #4285F4; } .qr .g span:nth-child(2) { color: #EA4335; }
+.qr .g span:nth-child(3) { color: #FBBC05; } .qr .g span:nth-child(4) { color: #4285F4; }
+.qr .g span:nth-child(5) { color: #34A853; } .qr .g span:nth-child(6) { color: #EA4335; }
+.src { text-align: left; font-size: 14px; color: var(--ink-3); font-weight: 600; line-height: 1.6; }
 .src b { color: var(--ink-2); }
 </style>
 </head>
 <body>
 <div class="poster" id="poster">
-  <div class="pattern"></div>
-  <svg class="waves" viewBox="0 0 1080 420" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0 150 C 180 110 320 190 540 150 S 900 110 1080 150 V420 H0Z" fill="rgba(127, 211, 247, .05)"/>
-    <path d="M0 210 C 200 170 360 250 560 205 S 920 170 1080 215 V420 H0Z" fill="rgba(127, 211, 247, .06)"/>
-    <path d="M0 290 C 220 255 380 325 600 285 S 940 255 1080 295 V420 H0Z" fill="rgba(6, 26, 49, .55)"/>
-  </svg>
 
-  <div class="layer top">
-    <div class="brand">
-      <div class="kicker">GAZA · PALESTINE</div>
-      <h1>طقس <span>غزة</span></h1>
+  <section class="scene">
+    <div id="scene"></div>
+    <div class="title">
+      <div class="loc">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+        <span id="place"></span>
+      </div>
+      <h1>طقس غزة</h1>
     </div>
     <div class="date">
-      <div class="bar"></div>
+      <div class="cal"><div class="m" id="calM"></div><div class="d" id="calD"></div></div>
       <div>
         <div class="day" id="dayName"></div>
         <div class="greg" id="greg"></div>
         <div class="hijri" id="hijri"></div>
       </div>
     </div>
-  </div>
-
-  <div class="layer hero">
-    <div class="now">
+    <div class="hero">
       <div class="temp"><span id="temp"></span><sup>°</sup></div>
       <div class="cond" id="cond"></div>
-      <div class="range" id="range"></div>
+      <div class="chips" id="chips"></div>
     </div>
-    <div class="sunart" id="sunart"></div>
-  </div>
+    <div class="stats" id="stats"></div>
+  </section>
 
-  <div class="layer stats" id="stats"></div>
+  <section class="week">
+    <div class="head">
+      <h2>توقعات الأسبوع<span id="span"></span></h2>
+      <div class="legend"><span><i style="background:var(--hi)"></i>العظمى</span><span><i style="background:var(--lo)"></i>الصغرى</span></div>
+    </div>
+    <div class="grid">
+      <div class="cols" id="cols"></div>
+      <div class="chart" id="chart"></div>
+    </div>
+  </section>
 
-  <div class="layer sec">
-    <h2>توقعات الأسبوع</h2>
-    <div class="rule"></div>
-    <div class="span" id="span"></div>
-  </div>
-  <div class="layer week" id="week"></div>
-
-  <div class="layer hadith">
+  <section class="hadith">
+    <svg class="branch r" viewBox="0 0 200 200" id="branchR"></svg>
+    <svg class="branch l" viewBox="0 0 200 200" id="branchL"></svg>
     <div class="tag" id="htag"></div>
-    <svg class="corner tr" viewBox="0 0 34 34" fill="none" stroke="#F7C873" stroke-width="1.6"><path d="M33 1H9a8 8 0 0 0-8 8v24"/><path d="M33 7H13a6 6 0 0 0-6 6v20" opacity=".5"/><circle cx="7" cy="7" r="2.2" fill="#F7C873" stroke="none"/></svg>
-    <svg class="corner tl" viewBox="0 0 34 34" fill="none" stroke="#F7C873" stroke-width="1.6"><path d="M33 1H9a8 8 0 0 0-8 8v24"/><path d="M33 7H13a6 6 0 0 0-6 6v20" opacity=".5"/><circle cx="7" cy="7" r="2.2" fill="#F7C873" stroke="none"/></svg>
-    <svg class="corner br" viewBox="0 0 34 34" fill="none" stroke="#F7C873" stroke-width="1.6"><path d="M33 1H9a8 8 0 0 0-8 8v24"/><path d="M33 7H13a6 6 0 0 0-6 6v20" opacity=".5"/><circle cx="7" cy="7" r="2.2" fill="#F7C873" stroke="none"/></svg>
-    <svg class="corner bl" viewBox="0 0 34 34" fill="none" stroke="#F7C873" stroke-width="1.6"><path d="M33 1H9a8 8 0 0 0-8 8v24"/><path d="M33 7H13a6 6 0 0 0-6 6v20" opacity=".5"/><circle cx="7" cy="7" r="2.2" fill="#F7C873" stroke="none"/></svg>
     <div class="lead" id="hlead"></div>
     <div class="quote" id="hquote"></div>
     <div class="ref" id="href"></div>
-  </div>
+  </section>
 
-  <div class="layer foot">
+  <footer class="foot">
     <div class="qr">
       <div class="code" id="qr"></div>
       <div>
         <div class="t1">امسح الرمز لمتابعة طقس غزة</div>
-        <div class="t2">مباشرةً على <span class="g">Google</span></div>
+        <div class="t2">مباشرةً على <span class="g"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></span></div>
       </div>
     </div>
     <div class="src" id="src"></div>
-  </div>
+  </footer>
 </div>
 
 <script>
@@ -239,109 +240,221 @@ body { font-family: 'Cairo', sans-serif; color: var(--ink); background: var(--na
 
 const V = window.VIEW;
 const $ = (id) => document.getElementById(id);
+const deg = (n) => `<span class="n">${n}°</span>`;
 
-/* ---------- icons (64×64 grid) ---------- */
-const DEFS = `
+/* ---------------- scene illustration ---------------- */
+const W = 1016, H = 624, HZ = 420;
+const FAIR = ['sunny', 'clear', 'partly'];
+const WET = ['drizzle', 'rain', 'storm'];
+
+function cloud(x, y, s, op, fill = '#FFFFFF') {
+  return `<g transform="translate(${x} ${y}) scale(${s})" fill="${fill}" opacity="${op}">
+    <ellipse cx="0" cy="0" rx="70" ry="24"/><circle cx="-26" cy="-14" r="28"/>
+    <circle cx="14" cy="-26" r="36"/><circle cx="50" cy="-8" r="22"/></g>`;
+}
+
+function scene(key) {
+  const fair = FAIR.includes(key);
+  const sky = fair ? ['#0A5FBD', '#2A8FE0', '#6FBFF1', '#FFE6B8'] : ['#3D5870', '#5E7B93', '#9EB3C4', '#DCE3E8'];
+  const sea = fair ? ['#0E6A93', '#1592B0', '#43C2C9'] : ['#34637A', '#4E8696', '#79AEB4'];
+  const sun = { x: 250, y: 300 };
+  let s = `<svg class="bg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
   <defs>
-    <radialGradient id="sunG" cx="45%" cy="40%" r="60%">
-      <stop offset="0" stop-color="#FFF1C1"/><stop offset=".55" stop-color="#FFC94D"/><stop offset="1" stop-color="#F59A2A"/>
-    </radialGradient>
-    <linearGradient id="cloudG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#C9DDF0"/>
-    </linearGradient>
-    <linearGradient id="cloudD" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#C7D3E0"/><stop offset="1" stop-color="#8A9BB0"/>
-    </linearGradient>
-  </defs>`;
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="${sky[0]}"/><stop offset=".5" stop-color="${sky[1]}"/>
+      <stop offset=".86" stop-color="${sky[2]}"/><stop offset="1" stop-color="${sky[3]}"/></linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="${sea[0]}"/><stop offset=".45" stop-color="${sea[1]}"/><stop offset="1" stop-color="${sea[2]}"/></linearGradient>
+    <linearGradient id="sand" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F7E4BC"/><stop offset="1" stop-color="#E7C48A"/></linearGradient>
+    <radialGradient id="glow" cx="${sun.x}" cy="${sun.y}" r="260" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFF1BF" stop-opacity=".85"/><stop offset=".3" stop-color="#FFD978" stop-opacity=".32"/>
+      <stop offset="1" stop-color="#FFD978" stop-opacity="0"/></radialGradient>
+    <radialGradient id="core" cx="40%" cy="36%" r="70%">
+      <stop offset="0" stop-color="#FFFBE6"/><stop offset=".45" stop-color="#FFD54F"/><stop offset="1" stop-color="#FFA726"/></radialGradient>
+    <linearGradient id="haze" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF4DC" stop-opacity="0"/><stop offset="1" stop-color="#FFF4DC" stop-opacity="${fair ? .55 : .35}"/></linearGradient>
+  </defs>
+  <rect width="${W}" height="${HZ}" fill="url(#sky)"/>`;
 
-function rays(cx, cy, r1, r2, n, w, color) {
+  if (fair) {
+    s += `<circle cx="${sun.x}" cy="${sun.y}" r="260" fill="url(#glow)"/>
+      <circle cx="${sun.x}" cy="${sun.y}" r="128" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="2"/>
+      <circle cx="${sun.x}" cy="${sun.y}" r="164" fill="none" stroke="#fff" stroke-opacity=".14" stroke-width="2"/>
+      <circle cx="${sun.x}" cy="${sun.y}" r="92" fill="url(#core)"/>`;
+    s += cloud(462, 398, .6, .85) + cloud(96, 406, .5, .7);
+    if (key === 'partly') s += cloud(330, 352, 1.35, .96);
+  } else {
+    s += cloud(180, 150, 1.6, .55, '#E9EEF2') + cloud(560, 110, 1.9, .5, '#E9EEF2') + cloud(900, 190, 1.4, .5, '#E9EEF2');
+    s += cloud(320, 300, 1.5, .8, '#F2F5F7') + cloud(760, 330, 1.2, .75, '#F2F5F7');
+    if (WET.includes(key)) {
+      let rain = '';
+      for (let i = 0; i < 70; i++) {
+        const x = (i * 149) % W, y = 160 + ((i * 89) % 240);
+        rain += `<line x1="${x}" y1="${y}" x2="${x - 8}" y2="${y + 26}"/>`;
+      }
+      s += `<g stroke="#fff" stroke-opacity=".45" stroke-width="2" stroke-linecap="round">${rain}</g>`;
+    }
+  }
+  s += `<rect y="${HZ - 80}" width="${W}" height="80" fill="url(#haze)"/>`;
+
+  /* sea */
+  s += `<rect y="${HZ}" width="${W}" height="${H - HZ}" fill="url(#sea)"/>
+    <line x1="0" y1="${HZ + .5}" x2="${W}" y2="${HZ + .5}" stroke="#fff" stroke-opacity=".35"/>`;
+  let glints = '';
+  for (let i = 0; i < 26; i++) {
+    const x = 30 + ((i * 263) % (W - 60)), y = HZ + 12 + ((i * 37) % 70), w = 10 + (i % 4) * 8;
+    glints += `<line x1="${x}" y1="${y}" x2="${x + w}" y2="${y}"/>`;
+  }
+  s += `<g stroke="#fff" stroke-opacity=".32" stroke-width="2.5" stroke-linecap="round">${glints}</g>`;
+  if (fair) {
+    let col = '';
+    for (let i = 0; i < 7; i++) {
+      const w = 70 - i * 7, y = HZ + 8 + i * 11;
+      col += `<line x1="${sun.x - w / 2 + (i % 2) * 6}" y1="${y}" x2="${sun.x + w / 2}" y2="${y}"/>`;
+    }
+    s += `<g stroke="#FFF3C4" stroke-opacity=".75" stroke-width="4" stroke-linecap="round">${col}</g>`;
+  }
+
+  /* fishing boat */
+  s += `<g transform="translate(560 ${HZ + 34}) scale(.9)">
+      <path d="M-44 0 H48 L36 15 H-34 Z" fill="#0B2E4A"/>
+      <rect x="-6" y="-14" width="26" height="14" rx="2" fill="#F7F1E2"/>
+      <line x1="-20" y1="0" x2="-20" y2="-58" stroke="#0B2E4A" stroke-width="3"/>
+      <path d="M-18 -56 L-18 -6 L22 -6 Z" fill="#fff"/>
+      <path d="M-22 -58 L-38 -52 L-22 -46 Z" fill="#E0702A"/>
+      <path d="M-40 21 H44" stroke="#fff" stroke-opacity=".35" stroke-width="2" stroke-linecap="round"/>
+    </g>`;
+
+  /* shoreline + sand */
+  const shore = (dy) => `M0 ${HZ + 92 + dy} C 180 ${HZ + 72 + dy} 380 ${HZ + 106 + dy} 560 ${HZ + 88 + dy} S 880 ${HZ + 70 + dy} ${W} ${HZ + 90 + dy}`;
+  s += `<path d="${shore(-14)}" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="3"/>
+    <path d="${shore(-4)} V${H} H0Z" fill="#D9B579" opacity=".55"/>
+    <path d="${shore(0)} V${H} H0Z" fill="url(#sand)"/>
+    <path d="${shore(-3)}" fill="none" stroke="#fff" stroke-opacity=".9" stroke-width="5" stroke-linecap="round"/>`;
+  return s + `</svg>`;
+}
+
+/* ---------------- small weather icons (64×64) ---------------- */
+const DEFS = `<defs>
+  <radialGradient id="sunI" cx="40%" cy="36%" r="70%"><stop offset="0" stop-color="#FFF6CF"/><stop offset=".5" stop-color="#FFC93C"/><stop offset="1" stop-color="#F7971E"/></radialGradient>
+  <linearGradient id="cloudI" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E6EEF5"/><stop offset="1" stop-color="#B9CADA"/></linearGradient>
+  <linearGradient id="cloudJ" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B9C7D4"/><stop offset="1" stop-color="#8396AA"/></linearGradient></defs>`;
+function rays(cx, cy, r1, r2, n, w) {
   let s = '';
   for (let i = 0; i < n; i++) {
-    const a = (Math.PI * 2 * i) / n;
-    s += `<line x1="${cx + r1 * Math.cos(a)}" y1="${cy + r1 * Math.sin(a)}" x2="${cx + r2 * Math.cos(a)}" y2="${cy + r2 * Math.sin(a)}" stroke="${color}" stroke-width="${w}" stroke-linecap="round"/>`;
+    const a = (Math.PI * 2 * i) / n + Math.PI / 8;
+    s += `<line x1="${cx + r1 * Math.cos(a)}" y1="${cy + r1 * Math.sin(a)}" x2="${cx + r2 * Math.cos(a)}" y2="${cy + r2 * Math.sin(a)}" stroke="#FFB627" stroke-width="${w}" stroke-linecap="round"/>`;
   }
   return s;
 }
-const CLOUD = (dx = 0, dy = 0, s = 1, fill = 'url(#cloudG)') =>
-  `<path transform="translate(${dx} ${dy}) scale(${s})" fill="${fill}" d="M18 50h28a10 10 0 0 0 1.6-19.9A14 14 0 0 0 20.6 27 11.5 11.5 0 0 0 18 50z"/>`;
-
+const CL = (dx = 0, dy = 0, s = 1, f = 'url(#cloudI)') =>
+  `<path transform="translate(${dx} ${dy}) scale(${s})" fill="${f}" d="M18 50h28a10 10 0 0 0 1.6-19.9A14 14 0 0 0 20.6 27 11.5 11.5 0 0 0 18 50z"/>`;
 const ICONS = {
-  sunny: () => `${rays(32, 32, 19, 27, 8, 3.4, '#FFC857')}<circle cx="32" cy="32" r="13.5" fill="url(#sunG)"/>`,
+  sunny: () => `${rays(32, 32, 19, 27, 8, 3.6)}<circle cx="32" cy="32" r="14" fill="url(#sunI)"/>`,
   clear: () => ICONS.sunny(),
-  partly: () => `${rays(24, 24, 14, 20, 8, 2.8, '#FFC857')}<circle cx="24" cy="24" r="10" fill="url(#sunG)"/>${CLOUD(4, 6, .92)}`,
-  cloudy: () => `${CLOUD(-6, -6, .8, 'url(#cloudD)')}${CLOUD(2, 4, .95)}`,
-  fog: () => `${CLOUD(0, -6, .95)}<g stroke="#C9DDF0" stroke-width="3" stroke-linecap="round"><line x1="14" y1="52" x2="50" y2="52"/><line x1="20" y1="58" x2="44" y2="58"/></g>`,
-  drizzle: () => `${CLOUD(0, -8, .95)}<g stroke="#7FD3F7" stroke-width="3" stroke-linecap="round"><line x1="24" y1="50" x2="22" y2="55"/><line x1="34" y1="50" x2="32" y2="55"/><line x1="44" y1="50" x2="42" y2="55"/></g>`,
-  rain: () => `${CLOUD(0, -8, .95, 'url(#cloudD)')}<g stroke="#7FD3F7" stroke-width="3.2" stroke-linecap="round"><line x1="22" y1="48" x2="18" y2="58"/><line x1="32" y1="48" x2="28" y2="58"/><line x1="42" y1="48" x2="38" y2="58"/></g>`,
-  snow: () => `${CLOUD(0, -8, .95)}<g fill="#FFFFFF"><circle cx="22" cy="52" r="2.6"/><circle cx="32" cy="57" r="2.6"/><circle cx="42" cy="52" r="2.6"/></g>`,
-  storm: () => `${CLOUD(0, -8, .95, 'url(#cloudD)')}<path d="M34 44 L26 56 h7 l-4 9 L40 51 h-7 l4-7z" fill="#FFC857"/>`,
+  partly: () => `${rays(24, 24, 14, 20, 8, 3)}<circle cx="24" cy="24" r="10" fill="url(#sunI)"/>${CL(4, 6, .92)}`,
+  cloudy: () => `${CL(-6, -6, .8, 'url(#cloudJ)')}${CL(2, 4, .95)}`,
+  fog: () => `${CL(0, -6, .95)}<g stroke="#9FB2C4" stroke-width="3" stroke-linecap="round"><line x1="14" y1="52" x2="50" y2="52"/><line x1="20" y1="58" x2="44" y2="58"/></g>`,
+  drizzle: () => `${CL(0, -8, .95)}<g stroke="#0E93B3" stroke-width="3" stroke-linecap="round"><line x1="24" y1="50" x2="22" y2="55"/><line x1="34" y1="50" x2="32" y2="55"/><line x1="44" y1="50" x2="42" y2="55"/></g>`,
+  rain: () => `${CL(0, -8, .95, 'url(#cloudJ)')}<g stroke="#0E93B3" stroke-width="3.2" stroke-linecap="round"><line x1="22" y1="48" x2="18" y2="58"/><line x1="32" y1="48" x2="28" y2="58"/><line x1="42" y1="48" x2="38" y2="58"/></g>`,
+  snow: () => `${CL(0, -8, .95)}<g fill="#7FB8D6"><circle cx="22" cy="52" r="2.6"/><circle cx="32" cy="57" r="2.6"/><circle cx="42" cy="52" r="2.6"/></g>`,
+  storm: () => `${CL(0, -8, .95, 'url(#cloudJ)')}<path d="M34 44 L26 56 h7 l-4 9 L40 51 h-7 l4-7z" fill="#FFB627"/>`,
 };
 const icon = (key, cls = '') => `<svg class="${cls}" viewBox="0 0 64 64">${DEFS}${(ICONS[key] || ICONS.sunny)()}</svg>`;
 
-/* big hero sun with glow + tapered rays */
-function heroArt(key) {
-  if (key !== 'sunny' && key !== 'clear') {
-    return `<svg viewBox="0 0 400 380"><circle cx="200" cy="190" r="170" fill="url(#halo)"/>
-      <defs><radialGradient id="halo"><stop offset="0" stop-color="#FFC94D" stop-opacity=".25"/><stop offset="1" stop-color="#FFC94D" stop-opacity="0"/></radialGradient></defs>
-      <g transform="translate(40 30) scale(5)">${DEFS}${ICONS[key]()}</g></svg>`;
-  }
-  let tapered = '';
-  for (let i = 0; i < 16; i++) {
-    const len = i % 2 ? 150 : 178;
-    tapered += `<path d="M200 ${190 - 104} L${200 - 7} ${190 - 112} L200 ${190 - len} L${200 + 7} ${190 - 112}Z" transform="rotate(${i * 22.5} 200 190)" fill="url(#rayG)"/>`;
-  }
-  return `<svg viewBox="0 0 400 380">
-    <defs>
-      <radialGradient id="glow"><stop offset="0" stop-color="#FFD27A" stop-opacity=".55"/><stop offset=".45" stop-color="#FFB347" stop-opacity=".18"/><stop offset="1" stop-color="#FFB347" stop-opacity="0"/></radialGradient>
-      <radialGradient id="core" cx="42%" cy="38%" r="65%"><stop offset="0" stop-color="#FFF6D8"/><stop offset=".45" stop-color="#FFD15C"/><stop offset="1" stop-color="#F28C28"/></radialGradient>
-      <linearGradient id="rayG" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FFD15C"/><stop offset="1" stop-color="#FFD15C" stop-opacity="0"/></linearGradient>
-    </defs>
-    <circle cx="200" cy="190" r="200" fill="url(#glow)"/>
-    ${tapered}
-    <circle cx="200" cy="190" r="118" fill="none" stroke="rgba(255,214,120,.35)" stroke-width="1.5" stroke-dasharray="2 9"/>
-    <circle cx="200" cy="190" r="92" fill="url(#core)"/>
-    <circle cx="200" cy="190" r="92" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
-    <path d="M150 160 A60 60 0 0 1 196 128" stroke="rgba(255,255,255,.75)" stroke-width="6" stroke-linecap="round" fill="none"/>
-  </svg>`;
-}
-
-/* line icons for the stat tiles */
-const G = '#F7C873';
-const STAT_ICONS = {
-  humidity: `<svg viewBox="0 0 40 40" fill="none" stroke="${G}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5 C 26 13 31 19 31 25 a11 11 0 0 1-22 0 C 9 19 14 13 20 5z"/><path d="M15 26a5 5 0 0 0 5 5"/></svg>`,
-  rain: `<svg viewBox="0 0 40 40" fill="none" stroke="${G}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20a15 15 0 0 1 30 0z"/><path d="M20 20v11a4 4 0 0 1-8 0"/><path d="M20 3v2"/></svg>`,
-  sunrise: `<svg viewBox="0 0 40 40" fill="none" stroke="${G}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 28a10 10 0 0 1 20 0"/><path d="M4 33h32"/><path d="M20 4v9"/><path d="M16 9l4-5 4 5"/><path d="M7 19l2 2M33 19l-2 2"/></svg>`,
-  sunset: `<svg viewBox="0 0 40 40" fill="none" stroke="${G}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 28a10 10 0 0 1 20 0"/><path d="M4 33h32"/><path d="M20 4v9"/><path d="M16 8.5l4 4.5 4-4.5"/><path d="M7 19l2 2M33 19l-2 2"/></svg>`,
+/* ---------------- stat icons ---------------- */
+const STAT = {
+  humidity: { bg: '#E0F3F8', c: '#0E93B3', svg: (c) => `<svg viewBox="0 0 28 28" fill="none" stroke="${c}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3.5c4.2 5.6 7.5 9.8 7.5 13.7a7.5 7.5 0 0 1-15 0C6.5 13.3 9.8 9.1 14 3.5z"/><path d="M10.5 18a3.5 3.5 0 0 0 3.5 3.5"/></svg>` },
+  rain: { bg: '#E6EEFB', c: '#2F6BD8', svg: (c) => `<svg viewBox="0 0 28 28" fill="none" stroke="${c}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 14a10.5 10.5 0 0 1 21 0z"/><path d="M14 14v7.5a2.8 2.8 0 0 1-5.6 0"/><path d="M14 2v1.5"/></svg>` },
+  sunrise: { bg: '#FFF2DA', c: '#E58A12', svg: (c) => `<svg viewBox="0 0 28 28" fill="none" stroke="${c}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20a7 7 0 0 1 14 0"/><path d="M3 23.5h22"/><path d="M14 3v7"/><path d="M11 6l3-3 3 3"/><path d="M5 13.5l1.5 1.5M23 13.5L21.5 15"/></svg>` },
+  sunset: { bg: '#FDE8DC', c: '#D0571C', svg: (c) => `<svg viewBox="0 0 28 28" fill="none" stroke="${c}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20a7 7 0 0 1 14 0"/><path d="M3 23.5h22"/><path d="M14 3v7"/><path d="M11 7l3 3 3-3"/><path d="M5 13.5l1.5 1.5M23 13.5L21.5 15"/></svg>` },
 };
 
-/* ---------- fill ---------- */
+/* ---------------- olive branch ---------------- */
+function branch() {
+  /* gently curved stem; each leaf grows out of it at ±38°, alternating sides */
+  const P = (t) => [20 + 150 * t + 30 * Math.sin(Math.PI * t), 190 - 165 * t + 10 * Math.sin(Math.PI * t)];
+  let leaves = '', olives = '';
+  for (let i = 0; i < 9; i++) {
+    const t = .1 + i * .095, [x, y] = P(t), [x2, y2] = P(t + .01);
+    const stem = Math.atan2(y2 - y, x2 - x) * 180 / Math.PI;
+    const a = stem + (i % 2 ? 38 : -38), r = a * Math.PI / 180, len = 30 - i * 1.2;
+    leaves += `<ellipse cx="${x + Math.cos(r) * len}" cy="${y + Math.sin(r) * len}" rx="${len}" ry="${len * .3}" transform="rotate(${a} ${x + Math.cos(r) * len} ${y + Math.sin(r) * len})"/>`;
+    if (i === 2 || i === 5) {
+      const o = (a + (i % 2 ? 50 : -50)) * Math.PI / 180;
+      olives += `<ellipse cx="${x + Math.cos(o) * 16}" cy="${y + Math.sin(o) * 16}" rx="8" ry="10.5"/>`;
+    }
+  }
+  const [ex, ey] = P(1);
+  leaves += `<ellipse cx="${ex + 10}" cy="${ey - 12}" rx="20" ry="6.5" transform="rotate(-50 ${ex + 10} ${ey - 12})"/>`;
+  let d = 'M' + P(0).join(' ');
+  for (let t = .05; t <= 1.001; t += .05) d += ' L' + P(t).join(' ');
+  return `<path d="${d}" fill="none" stroke="#F7F1E2" stroke-width="3.5" stroke-linecap="round"/>
+    <g fill="#F7F1E2">${leaves}</g><g fill="#F7F1E2" opacity=".75">${olives}</g>`;
+}
+
+/* ---------------- temperature chart ---------------- */
+function smooth(p) {
+  let d = `M${p[0][0]} ${p[0][1]}`;
+  for (let i = 0; i < p.length - 1; i++) {
+    const p0 = p[i - 1] || p[i], p1 = p[i], p2 = p[i + 1], p3 = p[i + 2] || p2;
+    d += ` C${p1[0] + (p2[0] - p0[0]) / 6} ${p1[1] + (p2[1] - p0[1]) / 6} ${p2[0] - (p3[0] - p1[0]) / 6} ${p2[1] - (p3[1] - p1[1]) / 6} ${p2[0]} ${p2[1]}`;
+  }
+  return d;
+}
+function chart(el) {
+  const w = el.clientWidth, h = el.clientHeight, n = V.week.length, cw = w / n;
+  const top = 30, bottom = h - 36;
+  const lo = V.weekMin, hi = V.weekMax, k = (bottom - top) / Math.max(1, hi - lo);
+  const y = (t) => bottom - (t - lo) * k;
+  const x = (i) => w - (i + .5) * cw;                 /* RTL: today on the right */
+  const HP = V.week.map((d, i) => [x(i), y(d.highN)]);
+  const LP = V.week.map((d, i) => [x(i), y(d.lowN)]);
+  const area = smooth(HP) + ' L' + smooth([...LP].reverse()).slice(1) + ' Z';
+  const dots = (P, c) => P.map(([a, b]) => `<circle cx="${a}" cy="${b}" r="6.5" fill="${c}" stroke="#fff" stroke-width="3"/>`).join('');
+  const labels = V.week.map((d, i) => `
+    <text x="${x(i)}" y="${HP[i][1] - 14}" text-anchor="middle" font-family="Alexandria" font-weight="800" font-size="21" fill="#0B2E4A" direction="ltr">${d.highN}°</text>
+    <text x="${x(i)}" y="${LP[i][1] + 28}" text-anchor="middle" font-family="Alexandria" font-weight="600" font-size="17" fill="#4E6274" direction="ltr">${d.lowN}°</text>`).join('');
+  el.innerHTML = `<svg viewBox="0 0 ${w} ${h}">
+    <defs><linearGradient id="band" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E0702A" stop-opacity=".16"/><stop offset="1" stop-color="#0E93B3" stop-opacity=".16"/></linearGradient></defs>
+    <path d="${area}" fill="url(#band)"/>
+    <path d="${smooth(HP)}" fill="none" stroke="#E0702A" stroke-width="4" stroke-linecap="round"/>
+    <path d="${smooth(LP)}" fill="none" stroke="#0E93B3" stroke-width="4" stroke-linecap="round"/>
+    ${dots(HP, '#E0702A')}${dots(LP, '#0E93B3')}${labels}</svg>`;
+}
+
+/* ---------------- fill ---------------- */
+$('scene').innerHTML = scene(V.hero.key);
+$('place').textContent = V.place;
+$('calM').textContent = V.calMonth;
+$('calD').textContent = V.calDay;
 $('dayName').textContent = V.dayName;
 $('greg').textContent = V.gregorian;
 $('hijri').textContent = V.hijri;
 
 $('temp').textContent = V.hero.high;
 $('cond').textContent = V.hero.label;
-$('range').innerHTML = `العظمى <b>${V.hero.high}°</b><i>|</i>الصغرى <b>${V.hero.low}°</b>`;
-$('sunart').innerHTML = heroArt(V.hero.key);
+const arrow = (up, c) => `<svg viewBox="0 0 14 14"><path d="${up ? 'M7 2l5 6H9v4H5V8H2z' : 'M7 12l5-6H9V2H5v4H2z'}" fill="${c}"/></svg>`;
+$('chips').innerHTML =
+  `<span class="chip">${arrow(true, '#E0702A')}العظمى <b>${deg(V.hero.high)}</b></span>` +
+  `<span class="chip">${arrow(false, '#0E93B3')}الصغرى <b>${deg(V.hero.low)}</b></span>`;
 
-$('stats').innerHTML = V.stats.map(s => `
-  <div class="stat">${STAT_ICONS[s.icon]}<div><div class="k">${s.k}</div><div class="v">${s.v}</div></div></div>`).join('');
-
-$('span').textContent = V.span;
-const span = Math.max(1, V.weekMax - V.weekMin);
-$('week').innerHTML = V.week.map((d, i) => {
-  const r = 100 * (d.lowN - V.weekMin) / span;          /* RTL: right edge = low */
-  const w = 100 * (d.highN - d.lowN) / span;
-  return `<div class="dayc ${i === 0 ? 'today' : ''}">
-    <div class="dn">${d.name}</div>
-    <div class="dd">${d.date}</div>
-    ${icon(d.key, 'ic')}
-    <div class="hi">${d.high}°</div>
-    <div class="rb"><span style="right:${r}%;width:${Math.max(w, 8)}%"></span></div>
-    <div class="lo">${d.low}°</div>
-  </div>`;
+$('stats').innerHTML = V.stats.map((s) => {
+  const t = STAT[s.icon];
+  return `<div class="stat"><div class="badge" style="background:${t.bg}">${t.svg(t.c)}</div>
+    <div><div class="k">${s.k}</div><div class="v">${s.v}</div></div></div>`;
 }).join('');
 
+$('span').textContent = V.span;
+$('cols').innerHTML = V.week.map((d, i) => `
+  <div class="col ${i === 0 ? 'today' : ''}">
+    <div class="dn">${d.name}</div><div class="dd">${d.date}</div>${icon(d.key, 'ic')}
+  </div>`).join('');
+
+$('branchR').innerHTML = branch();
+$('branchL').innerHTML = branch();
 $('htag').textContent = V.hadith.tag;
 $('hlead').textContent = V.hadith.lead;
 $('hquote').textContent = V.hadith.quote;
@@ -350,7 +463,10 @@ $('href').innerHTML = V.hadith.ref;
 $('qr').innerHTML = V.qr;
 $('src').innerHTML = V.src;
 
-document.fonts.ready.then(() => { document.body.dataset.ready = '1'; });
+document.fonts.ready.then(() => {
+  chart($('chart'));
+  document.body.dataset.ready = '1';
+});
 </script>
 </body>
 </html>
